@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Joel Lee"
+      user-mail-address "lee.yi.jie.joel@gmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -19,17 +19,16 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
-
+(setq doom-theme 'doom-monokai-pro)
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/Desktop/Box")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -37,7 +36,6 @@
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
-;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package!' for configuring packages
 ;; - `after!' for running code after a package has loaded
@@ -52,3 +50,68 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+(use-package! org
+  :mode ("\\.org\\'" . org-mode)
+  :init
+  (map! :leader
+        :prefix "n"
+        "c" #'org-capture)
+  (map! :map org-mode-map
+        "M-n" #'outline-next-visible-heading
+        "M-p" #'outline-previous-visible-heading)
+  (setq org-src-window-setup 'current-window
+        org-return-follows-link t
+        org-babel-load-languages '((emacs-lisp . t)
+                                   (python . t)
+                                   (dot . t)
+                                   (R . t))
+        org-confirm-babel-evaluate nil
+        org-use-speed-commands t
+        org-catch-invisible-edits 'show
+        org-preview-latex-image-directory "/tmp/ltximg/"
+        org-structure-template-alist '(("a" . "export ascii")
+                                       ("c" . "center")
+                                       ("C" . "comment")
+                                       ("e" . "example")
+                                       ("E" . "export")
+                                       ("h" . "export html")
+                                       ("l" . "export latex")
+                                       ("q" . "quote")
+                                       ("s" . "src")
+                                       ("v" . "verse")
+                                       ("el" . "src emacs-lisp")
+                                       ("d" . "definition")
+                                       ("t" . "theorem")))
+
+  (with-eval-after-load 'flycheck
+    (flycheck-add-mode 'proselint 'org-mode)))
+
+
+(defun joel/org-archive-done-tasks ()
+    "Archive all done tasks."
+    (interactive)
+    (org-map-entries 'org-archive-subtree "/DONE" 'file))
+  (require 'find-lisp)
+  (setq joel/org-agenda-directory "~/Desktop/Box/")
+  (setq org-agenda-files
+        (find-lisp-find-files joel/org-agenda-directory "\.org$"))
+
+(setq org-capture-templates
+        `(("i" "inbox" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
+           "* TODO %?")
+          ("e" "email" entry (file+headline ,(concat joel/org-agenda-directory "emails.org") "Emails")
+               "* TODO [#A] Reply: %a :@home:@school:"
+               :immediate-finish t)
+          ("c" "org-protocol-capture" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
+               "* TODO [[%:link][%:description]]\n\n %i"
+               :immediate-finish t)
+          ("w" "Weekly Review" entry (file+olp+datetree ,(concat joel/org-agenda-directory "reviews.org"))
+           (file ,(concat joel/org-agenda-directory "templates/weekly_review.org")))
+          ("r" "Reading" todo ""
+               ((org-agenda-files '(,(concat joel/org-agenda-directory "reading.org")))))))
+
+
+
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
