@@ -48,3 +48,15 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+(package! company-org-roam
+   :recipe (:host github :repo "jethrokuan/company-org-roam"))
+(package! org-roam
+  :recipe (:host github :repo "org-roam/org-roam"))
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+(package! org-journal)
+(package! company-org-roam
+  :recipe (:host github :repo "jethrokuan/company-org-roam"))
+(package! org-download)
+(package! org-roam-server
+  :recipe (:host github :repo "org-roam/org-roam-server"))

@@ -4,6 +4,11 @@
 ;; sync' after modifying this file!
 
 
+
+;; Note to self after cloning this config on to a new system.
+;; - [ ] Replace all the ~/Desktop entries
+;;
+
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Joel Lee"
@@ -92,7 +97,7 @@
     (interactive)
     (org-map-entries 'org-archive-subtree "/DONE" 'file))
   (require 'find-lisp)
-  (setq joel/org-agenda-directory "~/Desktop/Box/")
+(setq joel/org-agenda-directory "~/Desktop/Box/")
   (setq org-agenda-files
         (find-lisp-find-files joel/org-agenda-directory "\.org$"))
 
@@ -115,3 +120,45 @@
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
         (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+
+
+(setq org-roam-directory "~/Desktop/Box/org-roam/")
+(after! org-roam
+        (map! :leader
+            :prefix "n"
+            :desc "org-roam" "l" #'org-roam
+            :desc "org-roam-insert" "i" #'org-roam-insert
+            :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
+            :desc "org-roam-find-file" "f" #'org-roam-find-file
+            :desc "org-roam-show-graph" "g" #'org-roam-show-graph
+            :desc "org-roam-insert" "i" #'org-roam-insert
+            :desc "org-roam-capture" "c" #'org-roam-capture))
+
+(require 'company-org-roam)
+    (use-package company-org-roam
+      :when (featurep! :completion company)
+      :after org-roam
+      :config
+      (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
+
+(use-package org-journal
+      :bind
+      ("C-c n j" . org-journal-new-entry)
+      :custom
+      (org-journal-dir "~/Desktop/Box/org-roam/")
+      (org-journal-date-prefix "#+TITLE: ")
+      (org-journal-file-format "%Y-%m-%d.org")
+      (org-journal-date-format "%A, %d %B %Y"))
+    (setq org-journal-enable-agenda-integration t)
+
+ (use-package deft
+      :after org
+      :bind
+      ("C-c n d" . deft)
+      :custom
+      (deft-recursive t)
+      (deft-use-filter-string-for-filename t)
+      (deft-default-extension "org"[[file:../Desktop/Box/org-roam/20200709103745-this_page.org][this page]])
+      (deft-directory "~/Desktop/Box/org-roam/"))
+(use-package! org-roam-protocol
+  :after org-protocaol)
