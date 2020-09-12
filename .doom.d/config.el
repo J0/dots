@@ -104,16 +104,9 @@
 (setq org-capture-templates
         `(("i" "inbox" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
            "* TODO %?")
-          ("e" "email" entry (file+headline ,(concat joel/org-agenda-directory "emails.org") "Emails")
-               "* TODO [#A] Reply: %a :@home:@school:"
-               :immediate-finish t)
-          ("c" "org-protocol-capture" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
+          ("C" "org-protocol-capture" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
                "* TODO [[%:link][%:description]]\n\n %i"
-               :immediate-finish t)
-          ("w" "Weekly Review" entry (file+olp+datetree ,(concat joel/org-agenda-directory "reviews.org"))
-           (file ,(concat joel/org-agenda-directory "templates/weekly_review.org")))
-          ("r" "Reading" todo ""
-               ((org-agenda-files '(,(concat joel/org-agenda-directory "reading.org")))))))
+               :immediate-finish t)))
 
 
 
@@ -161,4 +154,15 @@
       (deft-default-extension "org"[[file:../Desktop/Box/org-roam/20200709103745-this_page.org][this page]])
       (deft-directory "~/Desktop/Box/org-roam/"))
 (use-package! org-roam-protocol
-  :after org-protocaol)
+  :after org-protocol)
+
+(use-package! org-download
+  :commands
+  org-download-dnd
+  org-download-yank
+  org-download-screenshot
+  org-download-dnd-base64
+  :init
+  (map! :map org-mode-map
+        "s-Y" #'org-download-screenshot
+        "s-y" #'org-download-yank))
