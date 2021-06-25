@@ -33,7 +33,8 @@
 (setq doom-theme 'doom-material)
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Desktop/Box")
+(setq org-directory "~/Dropbox/")
+(setq org-agenda-directory "~/Dropbox/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -97,7 +98,7 @@
     (interactive)
     (org-map-entries 'org-archive-subtree "/DONE" 'file))
   (require 'find-lisp)
-(setq joel/org-agenda-directory "~/Desktop/Box/")
+(setq joel/org-agenda-directory "~/Dropbox/org/")
   (setq org-agenda-files
         (find-lisp-find-files joel/org-agenda-directory "\.org$"))
 
@@ -118,7 +119,7 @@
         (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
 
 
-(setq org-roam-directory "~/Desktop/Box/org-roam/")
+(setq org-roam-directory "~/Dropbox/org-roam/")
 (after! org-roam
         (map! :leader
             :prefix "n"
@@ -141,7 +142,7 @@
       :bind
       ("C-c n j" . org-journal-new-entry)
       :custom
-      (org-journal-dir "~/Desktop/Box/org-roam/")
+      (org-journal-dir "~/Dropbox/org-roam/")
       (org-journal-date-prefix "#+TITLE: ")
       (org-journal-file-format "%Y-%m-%d.org")
       (org-journal-date-format "%A, %d %B %Y"))
@@ -154,8 +155,8 @@
       :custom
       (deft-recursive t)
       (deft-use-filter-string-for-filename t)
-      (deft-default-extension "org"[[file:../Desktop/Box/org-roam/20200709103745-this_page.org][this page]])
-      (deft-directory "~/Desktop/Box/org-roam/"))
+      (deft-default-extension "org"[[file:../Dropbox/org-roam/20200709103745-this_page.org][this page]])
+      (deft-directory "~/Dropbox/org-roam/"))
 (use-package! org-roam-protocol
   :after org-protocol)
 
