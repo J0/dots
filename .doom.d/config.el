@@ -98,28 +98,7 @@
     (interactive)
     (org-map-entries 'org-archive-subtree "/DONE" 'file))
   (require 'find-lisp)
-(setq joel/org-agenda-directory "~/Dropbox/org/")
-  (setq org-agenda-files
-        (find-lisp-find-files joel/org-agenda-directory "\.org$"))
 
-(setq org-capture-templates
-        `(("i" "inbox" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
-           "* TODO %?")
-          ("e" "Inbox [mail]" entry (file "~/.org/gtd/inbox.org")
-           ,(concat "* TODO Process: \"%a\" %?\n"
-                    "/Entered on/ %u"))
-          ("C" "org-protocol-capture" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
-               "* TODO [[%:link][%:description]]\n\n %i"
-               :immediate-finish t)))
-
-
-
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
-
-
-(setq org-roam-directory "~/Dropbox/org-roam/")
 (after! org-roam
         (map! :leader
             :prefix "n"
@@ -170,3 +149,25 @@
   (map! :map org-mode-map
         "s-Y" #'org-download-screenshot
         "s-y" #'org-download-yank))
+(setq joel/org-agenda-directory "~/Dropbox/org/")
+  (setq org-agenda-files
+        (find-lisp-find-files joel/org-agenda-directory "\.org$"))
+
+(setq org-capture-templates
+        `(("i" "inbox" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
+           "* TODO %?")
+          ("e" "Inbox [mail]" entry (file "~/.org/gtd/inbox.org")
+           ,(concat "* TODO Process: \"%a\" %?\n"
+                    "/Entered on/ %u"))
+          ("C" "org-protocol-capture" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
+               "* TODO [[%:link][%:description]]\n\n %i"
+               :immediate-finish t)))
+
+
+
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+
+
+(setq org-roam-directory "~/Dropbox/org-roam/")
