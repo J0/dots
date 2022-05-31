@@ -9,6 +9,7 @@
     pkgs.htop
     pkgs.python3
     pkgs.ripgrep
+    pkgs.nodejs
   ];
   programs.git = {
     enable = true;
