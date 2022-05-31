@@ -10,6 +10,7 @@
     pkgs.python3
     pkgs.ripgrep
     pkgs.nodejs
+    pkgs.emacs
   ];
   programs.git = {
     enable = true;
