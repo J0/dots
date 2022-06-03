@@ -11,7 +11,12 @@
     pkgs.ripgrep
     pkgs.nodejs
     pkgs.emacs
+    pkgs.python39Packages.ec2instanceconnectcli
+    pkgs.elixir
+    pkgs.rustup
   ];
+ 
+ 
   programs.git = {
     enable = true;
     userName = "J0";
