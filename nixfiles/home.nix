@@ -11,9 +11,14 @@
     pkgs.ripgrep
     pkgs.nodejs
     pkgs.emacs
-    pkgs.python39Packages.ec2instanceconnectcli
+    pkgs.poetry
     pkgs.elixir
     pkgs.rustup
+    pkgs.openssl
+    pkgs.erlang
+    pkgs.python39Packages.ec2instanceconnectcli
+    pkgs.jupyter
+    pkgs.exercism
   ];
  
  
