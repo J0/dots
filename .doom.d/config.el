@@ -137,7 +137,14 @@
                :immediate-finish t)))
 
 
+(setq org-refile-targets '(("next.org" :level . 0)
+                           ("someday.org" :level . 0)
+			   ("work.org" :level . 0)
+                           ("reading.org" :level . 1)
+                           ("projects.org" :maxlevel . 1)))
 
+
+(setq org-refile-allow-creating-parent-nodes 'confirm)
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
         (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
