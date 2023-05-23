@@ -60,3 +60,5 @@
 (package! org-download)
 (package! org-roam-server
   :recipe (:host github :repo "org-roam/org-roam-server"))
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
