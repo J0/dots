@@ -132,6 +132,8 @@
           ("e" "Inbox [mail]" entry (file "~/.org/gtd/inbox.org")
            ,(concat "* TODO Process: \"%a\" %?\n"
                     "/Entered on/ %u"))
+          ("s" "Someday" entry (file "~/.org/gtd/someday.org")
+           ,(concat "* TODO %?"))
           ("C" "org-protocol-capture" entry (file ,(concat joel/org-agenda-directory "inbox.org"))
                "* TODO [[%:link][%:description]]\n\n %i"
                :immediate-finish t)))
